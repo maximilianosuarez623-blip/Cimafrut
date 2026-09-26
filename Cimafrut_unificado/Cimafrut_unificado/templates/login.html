@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cimafrú - Ingreso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body class="login-page">
+    <div class="login-cover">
+        <div class="login-brand">
+            <div class="big-sun">✹</div>
+            <div class="logo-script">Cimafrú</div>
+            <div class="login-sub">Secado de Frutas<br>Mendoza</div>
+        </div>
+        <div class="login-motto">Del productor<br><em>al mejor fruto</em></div>
+    </div>
+
+    <div class="login-card">
+        <div class="mobile-brand"><span>✹</span> Cimafrú</div>
+        <h1>Ingresar</h1>
+        <p>Accedé al sistema de gestión.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for categoria, mensaje in messages %}
+                <div class="flash {{ categoria }}">{{ mensaje }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST">
+            <label>Usuario</label>
+            <input type="text" name="usuario" placeholder="Usuario" required>
+
+            <label>Contraseña</label>
+            <input type="password" name="password" placeholder="Contraseña" required>
+
+            <button class="btn-primary" type="submit">Ingresar</button>
+        </form>
+
+        <div class="login-help">Usuario inicial: <strong>admin</strong> · Contraseña: <strong>admin123</strong></div>
+    </div>
+</body>
+</html>

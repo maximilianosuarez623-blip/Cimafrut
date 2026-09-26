@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Ingresos registrados{% endblock %}
+{% block header %}Ingreso de fruta{% endblock %}
+{% block subtitle %}Ingresos registrados y pendientes de liquidación{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div><h2>Ingresos registrados</h2><p>Cada ingreso pasa por el control de calidad antes de la liquidación.</p></div>
+    <a class="btn-primary" href="{{ url_for('ingreso_fruta') }}">＋ Nuevo ingreso</a>
+</div>
+<div class="card">
+    <div class="tabla-contenedor">
+    <table>
+        <thead><tr><th>N°</th><th>Fecha</th><th>Productor</th><th>Fruta</th><th>Calidad</th><th>Kg</th><th>Precio/kg</th><th>Total</th><th>Estado</th><th></th></tr></thead>
+        <tbody>
+        {% for v in vales %}
+        <tr>
+            <td>{{ v.numero }}</td>
+            <td>{{ v.fecha.strftime('%d/%m/%Y %H:%M') }}</td>
+            <td>{{ v.productor.apellido }}, {{ v.productor.nombre }}</td>
+            <td>{{ v.fruta }}</td>
+            <td><span class="table-pill">{{ v.calidad }}</span></td>
+            <td>{{ v.kilos|kg }}</td>
+            <td>{{ v.precio_kg|moneda }}</td>
+            <td><strong>{{ v.importe|moneda }}</strong></td>
+            <td>{{ v.estado }}</td>
+            <td>{% if v.estado == "Pendiente" %}<a class="btn-small" href="{{ url_for('anular_vale', id=v.id) }}" onclick="return confirm('¿Anular este ingreso?')">Anular</a>{% endif %}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="10">No hay ingresos registrados.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

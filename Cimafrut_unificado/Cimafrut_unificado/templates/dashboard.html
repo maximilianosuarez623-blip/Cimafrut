@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Inicio - Cimafrú{% endblock %}
+{% block header %}Bienvenido, {{ current_user.usuario|title }}{% endblock %}
+{% block subtitle %}Gestión de ingreso, calidad y liquidación de fruta{% endblock %}
+
+{% block content %}
+<div class="hero-card">
+    <div>
+        <span class="eyebrow">CIMAFRÚ · MENDOZA</span>
+        <h2>Del productor al mejor fruto</h2>
+        <p>Registrá la fruta, evaluá su calidad y gestioná la liquidación desde un solo lugar.</p>
+    </div>
+    <div class="hero-sun">✹</div>
+</div>
+
+<section class="stat-grid">
+    <div class="stat-card">
+        <div class="stat-icon">♙</div>
+        <div><span>Productores activos</span><strong>{{ productores }}</strong></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">▣</div>
+        <div><span>Vales registrados</span><strong>{{ vales }}</strong></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">$</div>
+        <div><span>Liquidaciones</span><strong>{{ liquidaciones }}</strong></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">●</div>
+        <div><span>Kg ingresados</span><strong>{{ total_kilos|kg }}</strong></div>
+    </div>
+</section>
+
+<div class="section-title">
+    <div>
+        <h2>Accesos rápidos</h2>
+        <p>Las funciones principales del sistema.</p>
+    </div>
+</div>
+
+<section class="quick-grid">
+    <a href="{{ url_for('ingreso_fruta') }}" class="quick-card">
+        <span class="quick-icon yellow">＋</span>
+        <h3>Ingreso de fruta</h3>
+        <p>Registrar kilos por productor.</p>
+    </a>
+    <a href="{{ url_for('ingreso_fruta') }}" class="quick-card">
+        <span class="quick-icon blue">✓</span>
+        <h3>Control de calidad</h3>
+        <p>Calificar tamaño, estado y calidad.</p>
+    </a>
+    <a href="{{ url_for('liquidaciones') }}" class="quick-card">
+        <span class="quick-icon yellow">$</span>
+        <h3>Liquidación</h3>
+        <p>Generar pagos según la calidad.</p>
+    </a>
+    <a href="{{ url_for('informes') }}" class="quick-card">
+        <span class="quick-icon blue">▥</span>
+        <h3>Informes</h3>
+        <p>Ver reportes y estadísticas.</p>
+    </a>
+</section>
+
+<div class="notice">
+    <span>✦</span>
+    <div><strong>Juntos valorizamos el trabajo del productor</strong><br><small>La información de cada ingreso queda registrada para el seguimiento.</small></div>
+</div>
+{% endblock %}
