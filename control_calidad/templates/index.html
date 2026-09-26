@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Control de Calidad</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <h1>Control de Calidad</h1>
+
+    <form method="POST">
+
+        <label for="producto">Seleccione el producto:</label>
+
+        <select name="producto" id="producto" required onchange="mostrarCriterios()">
+
+            <option value="">Seleccione un producto</option>
+
+            {% for producto in productos %}
+                <option value="{{ producto }}">{{ producto }}</option>
+            {% endfor %}
+
+        </select>
+
+
+        <div id="criterios">
+
+            <p class="mensaje">
+                Seleccione un producto para comenzar la evaluación.
+            </p>
+
+        </div>
+
+
+        <button type="submit">
+            Evaluar calidad
+        </button>
+
+    </form>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

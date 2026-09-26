@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resultado de calidad</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="contenedor resultado">
+
+    <h1>Resultado de calidad</h1>
+
+    <h2>{{ producto }}</h2>
+
+
+    <div class="puntuacion">
+
+        {{ puntuacion }}/100
+
+    </div>
+
+
+    {% if resultado == "CALIDAD BUENA" %}
+
+        <div class="resultado bueno">
+            🟢 {{ resultado }}
+        </div>
+
+    {% elif resultado == "CALIDAD A REVISAR" %}
+
+        <div class="resultado revisar">
+            🟡 {{ resultado }}
+        </div>
+
+    {% else %}
+
+        <div class="resultado malo">
+            🔴 {{ resultado }}
+        </div>
+
+    {% endif %}
+
+
+    {% if defectos %}
+
+        <h3>Defectos encontrados:</h3>
+
+        <ul>
+
+            {% for defecto in defectos %}
+
+                <li>{{ defecto }}</li>
+
+            {% endfor %}
+
+        </ul>
+
+    {% else %}
+
+        <p>
+            No se detectaron defectos importantes.
+        </p>
+
+    {% endif %}
+
+
+    <a href="/" class="boton">
+        Nueva evaluación
+    </a>
+
+</div>
+
+</body>
+
+</html>
