@@ -1,0 +1,11 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{% block title %}CIMAFRUT{% endblock %}</title><link rel="stylesheet" href="{{ url_for('static',filename='estilos.css') }}"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></head><body>
+<aside class="sidebar"><div class="logo"><i class="fa-solid fa-leaf"></i><span>CIMAFRUT</span></div><nav>
+<a class="{% if request.endpoint=='dashboard' %}activo{% endif %}" href="{{url_for('dashboard')}}"><i class="fa-solid fa-house"></i><span>Panel principal</span></a>
+<a class="{% if 'productor' in (request.endpoint or '') %}activo{% endif %}" href="{{url_for('productores')}}"><i class="fa-solid fa-users"></i><span>Productores</span></a>
+<a class="{% if 'precio' in (request.endpoint or '') %}activo{% endif %}" href="{{url_for('precios')}}"><i class="fa-solid fa-tags"></i><span>Precios</span></a>
+<a class="{% if 'vale' in (request.endpoint or '') %}activo{% endif %}" href="{{url_for('vales')}}"><i class="fa-solid fa-receipt"></i><span>Vales de ingreso</span></a>
+<a class="{% if 'liquidacion' in (request.endpoint or '') %}activo{% endif %}" href="{{url_for('liquidaciones')}}"><i class="fa-solid fa-file-invoice-dollar"></i><span>Liquidaciones</span></a>
+</nav><div class="menu-inferior"><a href="{{url_for('logout')}}"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a></div></aside>
+<main class="contenido"><header><div><h1>{% block header %}Panel de administración{% endblock %}</h1><p>{% block subtitle %}Gestión general de CIMAFRUT{% endblock %}</p></div><div class="perfil"><div class="avatar">A</div><div><strong>Administrador</strong><small>Empresa</small></div></div></header>
+{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}<div class="flash {{c}}">{{m}}</div>{% endfor %}{% endwith %}
+{% block content %}{% endblock %}</main></body></html>
