@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrada de Producto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+        .formulario-contenedor {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            font-size: 14px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .checkbox-group {
+            margin-top: 15px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .seccion {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario-contenedor">
+        <h2>Entrada del Producto</h2>
+        <form action="/procesar_entrada" method="POST">
+            
+            <div class="grid-2">
+                <div>
+                    <label>Cliente:</label>
+                    <select name="cliente" id="select_cliente" required>
+                        <option value="">-- Seleccione un Cliente --</option>
+                        {% for id, prod in productores.items() %}
+                        <option value="{{ id }}" {% if datos.get('cliente') == prod.cliente %}selected{% endif %}>{{ prod.cliente }}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="hidden" name="nombre_cliente" id="nombre_cliente" value="{{ datos.get('cliente', '') }}">
+                </div>
+                <div>
+                    <label>Fecha:</label>
+                    <input type="date" name="fecha" id="fecha_actual" required>
+                </div>
+                <div>
+                    <label>Domicilio:</label>
+                    <input type="text" name="domicilio" id="domicilio" value="{{ datos.get('domicilio', '') }}">
+                </div>
+                <div>
+                    <label>CUIT / CUIL N°:</label>
+                    <input type="text" name="cuit" id="cuit" value="{{ datos.get('cuit', '') }}">
+                </div>
+                <div>
+                    <label>Condición IVA:</label>
+                    <select name="condicion_iva" id="condicion_iva">
+                        <option value="">-- Seleccione Condición --</option>
+                        <option value="Monotributista" {% if datos.get('condicion_iva') == 'Monotributista' or datos.get('condicion_iva') == 'MonotribuƟsta' %}selected{% endif %}>Monotributista</option>
+                        <option value="IVA responsable Inscripto" {% if datos.get('condicion_iva') == 'IVA responsable Inscripto' %}selected{% endif %}>IVA responsable Inscripto</option>
+                        <option value="IVA Sujeto Exento" {% if datos.get('condicion_iva') == 'IVA Sujeto Exento' %}selected{% endif %}>IVA Sujeto Exento</option>
+                        <option value="Consumidor Final" {% if datos.get('condicion_iva') == 'Consumidor Final' %}selected{% endif %}>Consumidor Final</option>
+                        <option value="Monotributo Social" {% if datos.get('condicion_iva') == 'Monotributo Social' %}selected{% endif %}>Monotributo Social</option>
+                        <option value="Pequeño Contribuyente Eventual" {% if datos.get('condicion_iva') == 'Pequeño Contribuyente Eventual' %}selected{% endif %}>Pequeño Contribuyente Eventual</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Pesaje</h3>
+                <div class="grid-3">
+                    <div>
+                        <label>Kilos brutos:</label>
+                        <input type="number" step="0.01" id="kilos_brutos" name="kilos_brutos">
+                    </div>
+                    <div>
+                        <label>Tara:</label>
+                        <input type="number" step="0.01" id="tara" name="tara">
+                    </div>
+                    <div>
+                        <label>Netos:</label>
+                        <input type="number" step="0.01" id="netos" name="netos" readonly style="background-color:#e9ecef;">
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label>Total final:</label>
+                    <input type="number" step="0.01" id="total_final" name="total_final" readonly style="background-color:#e9ecef;">
+                </div>
+            </div>
+
+            <div class="seccion">
+                <h3>Envases</h3>
+                <div class="grid-3">
+                    <div><label>Jaulas:</label><input type="number" name="jaulas"></div>
+                    <div><label>Bins:</label><input type="number" name="bins"></div>
+                    <div><label>Pallets:</label><input type="number" name="pallets"></div>
+                    <div><label>Saldo interior Devueltos:</label><input type="number" name="saldo_devueltos"></div>
+                    <div><label>Entregados:</label><input type="number" name="entregados"></div>
+                    <div><label>Saldo actual:</label><input type="number" name="saldo_actual"></div>
+                    <div><label>Otros:</label><input type="text" name="otros"></div>
+                </div>
+            </div>
+
+            <div class="seccion grid-2">
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="flete_propio" value="si"> Flete propio</label>
+                    <label><input type="checkbox" name="cosecha_propia" value="si"> Cosecha Propia</label>
+                </div>
+                <div>
+                    <label>Prom. Control:</label>
+                    <input type="text" name="prom_control">
+                </div>
+            </div>
+
+            <div class="seccion">
+                <label>Observaciones:</label>
+                <textarea name="observaciones" rows="3"></textarea>
+            </div>
+
+            <button type="submit">Guardar Entrada</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') if not test_local else 'script.js' }}"></script>
+    <script>
+        document.getElementById('select_cliente').addEventListener('change', function() {
+            const idProductor = this.value;
+            if (!idProductor) return;
+
+            fetch(`/api/productor/${idProductor}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.cliente) {
+                        document.getElementById('domicilio').value = data.domicilio || '';
+                        document.getElementById('cuit').value = data.cuit || '';
+                        document.getElementById('condicion_iva').value = data.condicion_iva || '';
+                        document.getElementById('nombre_cliente').value = data.cliente;
+                    }
+                });
+        });
+    </script>
+</body>
+</html>
