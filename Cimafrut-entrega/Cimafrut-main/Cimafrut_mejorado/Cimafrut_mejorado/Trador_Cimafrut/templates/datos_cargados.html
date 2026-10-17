@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }}{% endblock %}
+{% block header %}{{ titulo }}{% endblock %}
+{% block subtitle %}Confirmación de proceso{% endblock %}
+
+{% block content %}
+<div class="card form-narrow" style="text-align: center; padding: 40px 20px;">
+    <div style="font-size: 50px; color: #3da45b; margin-bottom: 15px;">✓</div>
+    <h2 style="color: #171c63; margin-bottom: 10px;">{{ titulo }}</h2>
+    <p style="color: #707996; font-size: 14px; margin-bottom: 30px;">{{ mensaje }}</p>
+    
+    <div style="display: flex; justify-content: center; gap: 15px;">
+        <a href="{{ url_for('dashboard') }}" class="btn-primary">Volver al inicio</a>
+        <a href="{{ url_for('logout') }}" class="btn-secondary">Salir / Cerrar sesión</a>
+    </div>
+</div>
+{% endblock %}
